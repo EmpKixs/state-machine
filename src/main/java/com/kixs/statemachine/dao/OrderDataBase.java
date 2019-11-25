@@ -1,4 +1,4 @@
-package com.kixs.statemachine;
+package com.kixs.statemachine.dao;
 
 import com.kixs.statemachine.state.OrderState;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * TODO 功能描述
+ * 模拟数据持久化操作
  *
  * @author wangbing
  * @version v1.0.0
@@ -21,6 +21,10 @@ public class OrderDataBase {
     public String get(String orderId) {
         OrderState state = orderMap.get(orderId);
         return state == null ? "不存在" : state.getDesc();
+    }
+
+    public OrderState getState(String orderId) {
+        return orderMap.get(orderId);
     }
 
     public String create(String orderId) {

@@ -1,8 +1,9 @@
 package com.kixs.statemachine.action;
 
-import com.kixs.statemachine.OrderDataBase;
-import com.kixs.statemachine.state.OrderEvent;
+import com.kixs.statemachine.dao.OrderDataBase;
+import com.kixs.statemachine.event.OrderEvent;
 import com.kixs.statemachine.state.OrderState;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
  * @version v1.0.0
  * @date 2019/11/23 16:25
  */
+@Slf4j
 @Component
 public class OrderCancelAction implements Action<OrderState, OrderEvent> {
 
@@ -24,7 +26,7 @@ public class OrderCancelAction implements Action<OrderState, OrderEvent> {
 
     @Override
     public void execute(StateContext<OrderState, OrderEvent> context) {
-        // orderDataBase.update(context.getEvent().getOrderId(), context.getTarget().getId());
         System.out.println("订单取消");
+        log.info("订单取消-context={}", context);
     }
 }
