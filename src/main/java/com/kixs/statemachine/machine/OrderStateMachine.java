@@ -10,7 +10,7 @@ import org.springframework.statemachine.annotation.WithStateMachine;
 import javax.annotation.Resource;
 
 /**
- * TODO 功能描述
+ * 注解方式处理
  *
  * @author wangbing
  * @version v1.0.0

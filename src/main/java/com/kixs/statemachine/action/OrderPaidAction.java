@@ -26,7 +26,7 @@ public class OrderPaidAction implements Action<OrderState, OrderEvent> {
 
     @Override
     public void execute(StateContext<OrderState, OrderEvent> context) {
-        log.info("收到订单支付完成消息，开始支付业务处理");context.getMessage();
+        log.info("收到订单支付完成消息，开始支付业务处理");
         log.info("订单支付完成-context={}", context);
     }
 }

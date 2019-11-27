@@ -3,6 +3,8 @@ package com.kixs.statemachine.config;
 import com.kixs.statemachine.action.OrderCancelAction;
 import com.kixs.statemachine.action.OrderPaidAction;
 import com.kixs.statemachine.event.OrderEvent;
+import com.kixs.statemachine.guard.OrderCancelActionGuard;
+import com.kixs.statemachine.guard.OrderPaidActionGuard;
 import com.kixs.statemachine.machine.OrderStatePersist;
 import com.kixs.statemachine.state.OrderState;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +37,12 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
     private OrderPaidAction orderPaidAction;
 
     @Resource
+    private OrderCancelActionGuard orderCancelActionGuard;
+
+    @Resource
+    private OrderPaidActionGuard orderPaidActionGuard;
+
+    @Resource
     private OrderStatePersist orderStatePersist;
 
     @Bean("stateMachinePersister")
@@ -52,8 +60,17 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
     @Override
     public void configure(StateMachineTransitionConfigurer<OrderState, OrderEvent> transitions) throws Exception {
         transitions
-                .withExternal().source(OrderState.UNPAID).target(OrderState.CALLED_OFF).event(OrderEvent.CANCEL).action(orderCancelAction)
-                .and()
-                .withExternal().source(OrderState.UNPAID).target(OrderState.DONE).event(OrderEvent.PAID).action(orderPaidAction);
+                .withExternal()
+                    .source(OrderState.UNPAID)
+                    .target(OrderState.CALLED_OFF)
+                    .event(OrderEvent.CANCEL)
+                    .action(orderCancelAction)
+                    .guard(orderCancelActionGuard)
+                .and().withExternal()
+                    .source(OrderState.UNPAID)
+                    .target(OrderState.DONE)
+                    .event(OrderEvent.PAID)
+                    .action(orderPaidAction)
+                    .guard(orderPaidActionGuard);
     }
 }
