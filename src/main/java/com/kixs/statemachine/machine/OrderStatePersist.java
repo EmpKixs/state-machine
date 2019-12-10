@@ -28,7 +28,7 @@ public class OrderStatePersist implements StateMachinePersist<OrderState, OrderE
 
     @Override
     public void write(StateMachineContext<OrderState, OrderEvent> context, String contextObj) throws Exception {
-        log.info("wraite-state：{}", context);
+        log.info("write-state：{}", context);
         orderDataBase.update(contextObj, context.getState());
     }
 
