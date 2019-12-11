@@ -1,5 +1,7 @@
 package com.kixs.statemachine.service;
 
+import java.util.Map;
+
 /**
  * 订单Service
  *
@@ -9,11 +11,11 @@ package com.kixs.statemachine.service;
  */
 public interface OrderService {
 
-    String get(String orderId);
+    Map<String, Object> get(String orderId);
 
-    String create(String orderId);
+    Map<String, Object> create(String orderId);
 
-    String paid(String orderId);
+    Map<String, Object> paid(String orderId);
 
-    String cancel(String orderId);
+    Map<String, Object> cancel(String orderId);
 }

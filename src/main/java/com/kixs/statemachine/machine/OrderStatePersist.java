@@ -10,7 +10,7 @@ import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * TODO 功能描述
@@ -34,10 +34,8 @@ public class OrderStatePersist implements StateMachinePersist<OrderState, OrderE
 
     @Override
     public StateMachineContext<OrderState, OrderEvent> read(String contextObj) throws Exception {
-        OrderState state = orderDataBase.getState(contextObj);
-        if (Objects.isNull(state)) {
-            throw new RuntimeException("订单不存在");
-        }
-        return new DefaultStateMachineContext<>(state, null, null, null, null, "stateMachine");
+        Map<String, Object> data = orderDataBase.get(contextObj);
+        OrderState state = OrderState.valueOf(data.get(OrderDataBase.ORDER_STATE).toString());
+        return new DefaultStateMachineContext<>(state, null, data, null, null, contextObj);
     }
 }

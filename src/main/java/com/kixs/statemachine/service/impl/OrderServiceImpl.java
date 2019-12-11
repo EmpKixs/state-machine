@@ -13,6 +13,7 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 订单ServiceImpl
@@ -35,18 +36,17 @@ public class OrderServiceImpl implements OrderService {
     private OrderDataBase orderDataBase;
 
     @Override
-    public String get(String orderId) {
+    public Map<String, Object> get(String orderId) {
         return orderDataBase.get(orderId);
     }
 
     @Override
-    public String create(String orderId) {
-        orderDataBase.create(orderId);
-        return orderDataBase.get(orderId);
+    public Map<String, Object> create(String orderId) {
+        return orderDataBase.create(orderId);
     }
 
     @Override
-    public String paid(String orderId) {
+    public Map<String, Object> paid(String orderId) {
         StateMachine<OrderState, OrderEvent> stateMachine = orderFsm.getStateMachine(orderId);
         stateMachine.start();
         try {
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String cancel(String orderId) {
+    public Map<String, Object> cancel(String orderId) {
         StateMachine<OrderState, OrderEvent> stateMachine = orderFsm.getStateMachine(orderId);
         stateMachine.start();
         try {

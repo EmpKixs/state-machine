@@ -5,3 +5,8 @@ spring:
     name: state-machine
   main:
     allow-bean-definition-overriding: true
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: redis123456

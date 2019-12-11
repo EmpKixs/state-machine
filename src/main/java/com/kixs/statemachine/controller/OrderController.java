@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 订单相关Controller
@@ -23,22 +24,22 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/{orderId}/get")
-    public String get(@PathVariable("orderId") String orderId) {
+    public Map<String, Object> get(@PathVariable("orderId") String orderId) {
         return orderService.get(orderId);
     }
 
     @GetMapping("/{orderId}/create")
-    public String create(@PathVariable("orderId") String orderId) {
+    public Map<String, Object> create(@PathVariable("orderId") String orderId) {
         return orderService.create(orderId);
     }
 
     @GetMapping("/{orderId}/paid")
-    public String paid(@PathVariable("orderId") String orderId) {
+    public Map<String, Object> paid(@PathVariable("orderId") String orderId) {
         return orderService.paid(orderId);
     }
 
     @GetMapping("/{orderId}/cancel")
-    public String cancel(@PathVariable("orderId") String orderId) {
+    public Map<String, Object> cancel(@PathVariable("orderId") String orderId) {
         return orderService.cancel(orderId);
     }
 }
