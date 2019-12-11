@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @date 2019/11/23 14:53
  */
 @Slf4j
-// @WithStateMachine
+@WithStateMachine
 public class OrderStateMachine {
 
     @Resource

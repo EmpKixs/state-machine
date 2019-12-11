@@ -13,9 +13,10 @@ import java.util.Map;
  */
 public interface OrderDataBase {
 
-    String ORDER_AMOUNT = "orderAmount";
-    String ORDER_STATE = "orderState";
-    String ORDER_TIME = "orderTime";
+    String ORDER_ID = "id";
+    String ORDER_AMOUNT = "amount";
+    String ORDER_STATE = "state";
+    String ORDER_TIME = "time";
 
     Map<String, Object> get(String orderId);
 

@@ -27,7 +27,7 @@ import java.util.Map;
 public class OrderServiceImpl implements OrderService {
 
     @Resource
-    private StateMachinePersister<OrderState, OrderEvent, String> stateMachinePersister;
+    private StateMachinePersister<OrderState, OrderEvent, Map<String, Object>> stateMachinePersister;
 
     @Resource
     private StateMachineFactory<OrderState, OrderEvent> orderFsm;
@@ -50,14 +50,15 @@ public class OrderServiceImpl implements OrderService {
         StateMachine<OrderState, OrderEvent> stateMachine = orderFsm.getStateMachine(orderId);
         stateMachine.start();
         try {
-            stateMachinePersister.restore(stateMachine, orderId);
+            Map<String, Object> data = orderDataBase.get(orderId);
+            stateMachinePersister.restore(stateMachine, data);
             MessageBuilder<OrderEvent> builder = MessageBuilder
                     .withPayload(OrderEvent.PAID)
                     .setHeader("orderId", orderId);
             Message<OrderEvent> message = builder.build();
             boolean success = stateMachine.sendEvent(message);
             if (success) {
-                stateMachinePersister.persist(stateMachine, orderId);
+                stateMachinePersister.persist(stateMachine, data);
             } else {
                 log.error("状态机处理失败");
             }
@@ -74,14 +75,15 @@ public class OrderServiceImpl implements OrderService {
         StateMachine<OrderState, OrderEvent> stateMachine = orderFsm.getStateMachine(orderId);
         stateMachine.start();
         try {
-            stateMachinePersister.restore(stateMachine, orderId);
+            Map<String, Object> data = orderDataBase.get(orderId);
+            stateMachinePersister.restore(stateMachine, data);
             MessageBuilder<OrderEvent> builder = MessageBuilder
                     .withPayload(OrderEvent.CANCEL)
                     .setHeader("orderId", orderId);
             Message<OrderEvent> message = builder.build();
             boolean success = stateMachine.sendEvent(message);
             if (success) {
-                stateMachinePersister.persist(stateMachine, orderId);
+                stateMachinePersister.persist(stateMachine, data);
             } else {
                 log.error("状态机处理失败");
             }

@@ -18,6 +18,7 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 
 import javax.annotation.Resource;
 import java.util.EnumSet;
+import java.util.Map;
 
 /**
  * 状态机配置
@@ -46,7 +47,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
     private OrderStatePersist orderStatePersist;
 
     @Bean("stateMachinePersister")
-    public StateMachinePersister<OrderState, OrderEvent, String> orderStatePersist() {
+    public StateMachinePersister<OrderState, OrderEvent, Map<String, Object>> orderStatePersist() {
         return new DefaultStateMachinePersister<>(orderStatePersist);
     }
 
@@ -64,13 +65,13 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
                     .source(OrderState.UNPAID)
                     .target(OrderState.CALLED_OFF)
                     .event(OrderEvent.CANCEL)
-                    .action(orderCancelAction)
+                    //.action(orderCancelAction)
                     .guard(orderCancelActionGuard)
                 .and().withExternal()
                     .source(OrderState.UNPAID)
                     .target(OrderState.DONE)
                     .event(OrderEvent.PAID)
-                    .action(orderPaidAction)
+                    //.action(orderPaidAction)
                     .guard(orderPaidActionGuard);
     }
 }

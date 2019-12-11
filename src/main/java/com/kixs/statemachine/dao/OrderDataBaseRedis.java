@@ -34,6 +34,7 @@ public class OrderDataBaseRedis implements OrderDataBase {
             throw new RuntimeException("订单不存在");
         }
         Map<String, Object> data = new HashMap<>();
+        data.put(ORDER_ID, redisTemplate.opsForHash().get(orderKey, ORDER_ID));
         data.put(ORDER_AMOUNT, redisTemplate.opsForHash().get(orderKey, ORDER_AMOUNT));
         data.put(ORDER_STATE, redisTemplate.opsForHash().get(orderKey, ORDER_STATE));
         data.put(ORDER_TIME, redisTemplate.opsForHash().get(orderKey, ORDER_TIME));
@@ -54,6 +55,7 @@ public class OrderDataBaseRedis implements OrderDataBase {
             throw new RuntimeException("订单已存在");
         }
         Map<String, Object> data = new HashMap<>(16);
+        data.put(ORDER_ID, orderId);
         data.put(ORDER_AMOUNT, BigDecimal.ONE);
         data.put(ORDER_STATE, OrderState.UNPAID);
         data.put(ORDER_TIME, new Date());

@@ -29,12 +29,12 @@ public class OrderStatePersist implements StateMachinePersist<OrderState, OrderE
     @Override
     public void write(StateMachineContext<OrderState, OrderEvent> context, Map<String, Object> contextObj) throws Exception {
         log.info("write-state：{}", context);
-        orderDataBase.update(contextObj.get("orderId").toString(), context.getState());
+        orderDataBase.update(contextObj.get(OrderDataBase.ORDER_ID).toString(), context.getState());
     }
 
     @Override
     public StateMachineContext<OrderState, OrderEvent> read(Map<String, Object> contextObj) throws Exception {
         OrderState state = OrderState.valueOf(contextObj.get(OrderDataBase.ORDER_STATE).toString());
-        return new DefaultStateMachineContext<>(state, null, null, null, null, contextObj.get("orderId").toString());
+        return new DefaultStateMachineContext<>(state, null, null, null, null, contextObj.get(OrderDataBase.ORDER_ID).toString());
     }
 }
