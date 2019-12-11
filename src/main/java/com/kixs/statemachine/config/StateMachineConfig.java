@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.EnumSet;
 
 /**
- * TODO 功能描述
+ * 状态机配置
  *
  * @author wangbing
  * @version v1.0.0
@@ -64,13 +64,13 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
                     .source(OrderState.UNPAID)
                     .target(OrderState.CALLED_OFF)
                     .event(OrderEvent.CANCEL)
-                    //.action(orderCancelAction)
+                    .action(orderCancelAction)
                     .guard(orderCancelActionGuard)
                 .and().withExternal()
                     .source(OrderState.UNPAID)
                     .target(OrderState.DONE)
                     .event(OrderEvent.PAID)
-                    // .action(orderPaidAction)
+                    .action(orderPaidAction)
                     .guard(orderPaidActionGuard);
     }
 }

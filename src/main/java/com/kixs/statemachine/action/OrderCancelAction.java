@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * TODO 功能描述
+ * 订单取消操作处理
  *
  * @author wangbing
  * @version v1.0.0
@@ -26,7 +26,7 @@ public class OrderCancelAction implements Action<OrderState, OrderEvent> {
 
     @Override
     public void execute(StateContext<OrderState, OrderEvent> context) {
-        System.out.println("订单取消");
+        log.info("收到订单取消消息，开始取消业务处理");
         log.info("订单取消-context={}", context);
     }
 }

@@ -1,16 +1,14 @@
 package com.kixs.statemachine.dao;
 
 import com.kixs.statemachine.state.OrderState;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * TODO 功能描述
+ * 本地Map实现
  *
  * @author wangbing
  * @version v1.0.0

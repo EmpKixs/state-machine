@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * TODO 功能描述
+ * 状态机持久化
  *
  * @author wangbing
  * @version v1.0.0
@@ -21,21 +21,20 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class OrderStatePersist implements StateMachinePersist<OrderState, OrderEvent, String> {
+public class OrderStatePersist implements StateMachinePersist<OrderState, OrderEvent, Map<String, Object>> {
 
     @Resource
     private OrderDataBase orderDataBase;
 
     @Override
-    public void write(StateMachineContext<OrderState, OrderEvent> context, String contextObj) throws Exception {
+    public void write(StateMachineContext<OrderState, OrderEvent> context, Map<String, Object> contextObj) throws Exception {
         log.info("write-state：{}", context);
-        orderDataBase.update(contextObj, context.getState());
+        orderDataBase.update(contextObj.get("orderId").toString(), context.getState());
     }
 
     @Override
-    public StateMachineContext<OrderState, OrderEvent> read(String contextObj) throws Exception {
-        Map<String, Object> data = orderDataBase.get(contextObj);
-        OrderState state = OrderState.valueOf(data.get(OrderDataBase.ORDER_STATE).toString());
-        return new DefaultStateMachineContext<>(state, null, data, null, null, contextObj);
+    public StateMachineContext<OrderState, OrderEvent> read(Map<String, Object> contextObj) throws Exception {
+        OrderState state = OrderState.valueOf(contextObj.get(OrderDataBase.ORDER_STATE).toString());
+        return new DefaultStateMachineContext<>(state, null, null, null, null, contextObj.get("orderId").toString());
     }
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO 功能描述
+ * 远程Redis实现
  *
  * @author wangbing
  * @version v1.0.0
